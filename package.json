@@ -1,10 +1,12 @@
 {
-  "name": "permit",
-  "version": "1.0.0",
+  "name": "viem-permit",
+  "version": "1.0.2",
   "description": "A viem action and a wagmi hook to use EIP-2612 Permits",
   "exports": [
     "./permit.ts"
   ],
+  "types": "./permit.d.ts",
+  "type": "module",
   "scripts": {
     "test": "vitest run"
   },
@@ -18,7 +20,9 @@
   "license": "GNU Affero v3",
   "devDependencies": {
     "@biomejs/biome": "1.0.0",
+    "typescript": "^5.2.2",
     "viem": "^1.9.5",
+    "viem-permit": "^1.0.2",
     "wagmi": "^1.3.11"
   },
   "peerDependencies": {
