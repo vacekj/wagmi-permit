@@ -1,0 +1,12 @@
+{
+  "name": "permit",
+  "version": "1.0.0",
+  "description": "A viem action and a wagmi hook to use EIP-2612 Permits",
+  "exports": ["./permit.ts"],
+  "scripts": {
+    "test": "vitest run"
+  },
+  "keywords": ["wagmi", "viem", "permit", "eip2612"],
+  "author": "Atris",
+  "license": "GNU Affero v3"
+}
