@@ -10,22 +10,28 @@ export type PermitSignature = {
 
 type SignPermitProps = {
 	walletClient: WalletClient;
+	/** Address of the token to approve */
 	contractAddress: Hex;
+	/** Name of the token to approve.
+	 * Corresponds to the `name` method on the ERC-20 contract. Please note this must match exactly, and is case-and-spacing sensitive */
 	erc20Name: string;
+	/** Owner of the tokens. Usually the currently connected address. */
 	ownerAddress: Hex;
+	/** Address to grant allowance to */
 	spenderAddress: Hex;
+	/** Expiration of this approval, in SECONDS */
 	deadline: bigint;
+	/** Numerical chainId of the token contract */
 	chainId: number;
+	/** Defaults to 1. Some tokens need a different version, check the [README](https://github.com/vacekj/permit#permit-information-for-common-tokens) for more information */
 	permitVersion?: string;
+	/** Permit nonce for the specific user and token contract. You can get the nonce from the `nonces` method on the token contract. */
+	nonce: bigint;
 };
 
 type Eip2612Props = SignPermitProps & {
+	/** Amount to approve */
 	value: bigint;
-	nonce: bigint;
-};
-
-type DaiPermitProps = SignPermitProps & {
-	nonce: bigint;
 };
 
 /** Signs a permit for EIP-2612-compatible ERC-20 tokens */
@@ -91,7 +97,7 @@ export const signPermitDai = async ({
 	nonce,
 	chainId,
 	permitVersion,
-}: DaiPermitProps): Promise<PermitSignature> => {
+}: SignPermitProps): Promise<PermitSignature> => {
 	const types = {
 		Permit: [
 			{ name: "holder", type: "address" },
@@ -154,7 +160,7 @@ export function usePermit({ address, chainId, walletClient }: UsePermitProps) {
 		signPermitDai: ready
 			? (
 					props: Omit<
-						DaiPermitProps,
+						SignPermitProps,
 						"chainId" | "ownerAddress" | "walletClient"
 					>,
 			  ) =>
