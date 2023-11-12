@@ -1,7 +1,7 @@
 {
-	"name": "viem-permit",
-	"version": "1.0.2",
-	"description": "A pure function, viem action, extension and a wagmi hook to use EIP-2612 and Dai permits",
+	"name": "wagmi-permit",
+	"version": "1.0.1",
+	"description": "Easy EIP-2612 and Dai permits with wagmi & viem",
 	"main": "./dist/permit.js",
 	"types": "./dist/permit.d.ts",
 	"exports": {

@@ -1,6 +1,5 @@
 import { Hex, hexToNumber, pad, slice, toHex, TypedDataDomain } from "viem";
-import { Address, WalletClient } from "wagmi";
-import { GetWalletClientResult } from "wagmi/actions";
+import type { Address, WalletClient } from "wagmi";
 
 export type PermitSignature = {
 	r: Hex;
@@ -148,7 +147,7 @@ export const signPermitDai = async ({
 };
 
 type UsePermitProps = {
-	walletClient: GetWalletClientResult | undefined;
+	walletClient?: WalletClient | null;
 	chainId?: number;
 	address?: Address;
 };

@@ -1,4 +1,4 @@
-# Viem Permit
+# Wagmi Permit
 
 All you need to sign EIP2612/DAI permits with viem and wagmi.
 
