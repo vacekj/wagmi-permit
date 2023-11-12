@@ -15,7 +15,7 @@ Information on various tokens, their supported permit type, version and methods.
 - DAI supports EIP2612 permit on other chains.
 - Some have version 1, some have version 2.
 - Contracts that don't have a version method (as it's not part of the [EIP2612](https://eips.ethereum.org/EIPS/eip-2612)
-  spec) are assumed to have version 1.
+  spec) are assumed to have version 1
 
 | Chain         | Address                                    | DAI Permit | EIP2612 Permit | Version | transferWithPermit |
 |---------------|--------------------------------------------|------------|----------------|---------|--------------------|
