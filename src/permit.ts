@@ -33,7 +33,7 @@ type Eip2612Props = SignPermitProps & {
 	value: bigint;
 };
 
-/** Signs a permit for EIP-2612-compatible ERC-20 tokens */
+/** Signs a permit for ERC-2612-compatible ERC-20 tokens */
 export const signPermit2612 = async ({
 	walletClient,
 	contractAddress,

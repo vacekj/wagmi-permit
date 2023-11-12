@@ -1,7 +1,7 @@
 {
 	"name": "wagmi-permit",
 	"version": "1.0.1",
-	"description": "Easy EIP-2612 and Dai permits with wagmi & viem",
+	"description": "Easy ERC-2612 and Dai permits with wagmi & viem",
 	"main": "./dist/permit.js",
 	"types": "./dist/permit.d.ts",
 	"exports": {

@@ -1,6 +1,6 @@
 # Wagmi Permit
 
-All you need to sign EIP2612/DAI permits with viem and wagmi.
+All you need to sign ERC-2612/DAI permits with viem and wagmi.
 
 ## Permit information for common tokens
 
@@ -8,13 +8,13 @@ Information on various tokens, their supported permit type, version and methods.
 
 ## DAI
 
-- DAI has its own permit that is incompatible with [EIP2612](https://eips.ethereum.org/EIPS/eip-2612).
+- DAI has its own permit that is incompatible with [ERC-2612](https://ercs.ethereum.org/ERCS/erc-2612).
 - It doesn't specify allowance, only `allowed: bool` (`true` for infinite approval, `false` for zero).
 - Its version is always 1.
 - It's currently used on Ethereum and Polygon PoS.
-- DAI supports EIP2612 permit on other chains.
+- DAI supports ERC-2612 permit on other chains.
 - Some have version 1, some have version 2.
-- Contracts that don't have a version method (as it's not part of the [EIP2612](https://eips.ethereum.org/EIPS/eip-2612)
+- Contracts that don't have a version method (as it's not part of the [EIP2612](https://eips.ethereum.org/EIPS/ERC-2612)
   spec) are assumed to have version 1
 
 | Chain         | Address                                    | DAI Permit | EIP2612 Permit | Version | transferWithPermit |
