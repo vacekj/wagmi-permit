@@ -1,5 +1,6 @@
-import { Hex, hexToNumber, slice } from "viem";
-import { useAccount, useNetwork, useWalletClient, WalletClient } from "wagmi";
+import { Hex, hexToNumber, pad, slice, toHex, TypedDataDomain } from "viem";
+import { Address, WalletClient } from "wagmi";
+import { GetWalletClientResult } from "wagmi/actions";
 
 export type PermitSignature = {
 	r: Hex;
@@ -27,7 +28,7 @@ type DaiPermitProps = SignPermitProps & {
 	nonce: bigint;
 };
 
-/* Signs a permit for EIP-2612-compatible ERC-20 tokens */
+/** Signs a permit for EIP-2612-compatible ERC-20 tokens */
 export const signPermit2612 = async ({
 	walletClient,
 	contractAddress,
@@ -101,12 +102,21 @@ export const signPermitDai = async ({
 		],
 	};
 
-	const domainData = {
+	let domainData: TypedDataDomain = {
 		name: erc20Name,
 		version: permitVersion ?? "1",
 		chainId: chainId,
 		verifyingContract: contractAddress,
 	};
+	/** USDC on Polygon is a special case */
+	if (chainId === 137 && erc20Name === "USD Coin (PoS)") {
+		domainData = {
+			name: erc20Name,
+			version: permitVersion ?? "1",
+			verifyingContract: contractAddress,
+			salt: pad(toHex(137), { size: 32 }),
+		};
+	}
 
 	const message = {
 		holder: ownerAddress,
@@ -131,29 +141,43 @@ export const signPermitDai = async ({
 	return { r, s, v: hexToNumber(v) };
 };
 
-export function usePermit() {
-	const { data: walletClient } = useWalletClient();
-	const { chain } = useNetwork();
-	const { address } = useAccount();
+type UsePermitProps = {
+	walletClient: GetWalletClientResult | undefined;
+	chainId?: number;
+	address?: Address;
+};
+
+export function usePermit({ address, chainId, walletClient }: UsePermitProps) {
+	const ready = walletClient && chainId && address;
 
 	return {
-		signPermitDai: (
-			props: Omit<DaiPermitProps, "chainId" | "ownerAddress" | "walletClient">,
-		) =>
-			signPermitDai({
-				chainId: chain.id,
-				walletClient,
-				ownerAddress: address,
-				...props,
-			}),
-		signPermit: (
-			props: Omit<Eip2612Props, "chainId" | "ownerAddress" | "walletClient">,
-		) =>
-			signPermit2612({
-				chainId: chain.id,
-				walletClient,
-				ownerAddress: address,
-				...props,
-			}),
+		signPermitDai: ready
+			? (
+					props: Omit<
+						DaiPermitProps,
+						"chainId" | "ownerAddress" | "walletClient"
+					>,
+			  ) =>
+					signPermitDai({
+						chainId,
+						walletClient,
+						ownerAddress: address,
+						...props,
+					})
+			: undefined,
+		signPermit: ready
+			? (
+					props: Omit<
+						Eip2612Props,
+						"chainId" | "ownerAddress" | "walletClient"
+					>,
+			  ) =>
+					signPermit2612({
+						chainId,
+						walletClient,
+						ownerAddress: address,
+						...props,
+					})
+			: undefined,
 	};
 }
