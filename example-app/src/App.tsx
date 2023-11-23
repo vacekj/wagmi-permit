@@ -14,11 +14,18 @@ function App() {
 		tokenAddress: "0xa2327a938febf5fec13bacfb16ae10ecbc4cbdcf", // usdc
 	});
 	return (
-		<Container>
-			<Heading as={"h1"}>Wagmi Permit Demo</Heading>
-			<ConnectButton />
+		<Container my={3}>
+			<Heading as={"h1"} mb={5}>
+				Wagmi Permit Demo
+			</Heading>
+			<ConnectButton
+				chainStatus={{ smallScreen: "full", largeScreen: "full" }}
+				showBalance={{ smallScreen: true, largeScreen: true }}
+				accountStatus={{ smallScreen: "full", largeScreen: "full" }}
+			/>
 			{walletClient && (
 				<Button
+					mt={3}
 					onClick={async () => {
 						const permitSignature = await signPermit?.({
 							value: parseEther("10"),
