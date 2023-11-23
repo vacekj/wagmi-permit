@@ -1,5 +1,7 @@
 import { Hex, hexToNumber, pad, slice, toHex, TypedDataDomain } from "viem";
 import type { Address, WalletClient } from "wagmi";
+import { useContractRead } from "wagmi";
+import { ERC20ABI } from "./abi.js";
 
 export type PermitSignature = {
 	r: Hex;
@@ -149,24 +151,66 @@ export const signPermitDai = async ({
 type UsePermitProps = {
 	walletClient?: WalletClient | null;
 	chainId?: number;
-	address?: Address;
+	tokenAddress?: Address;
+	owner: Address;
+	spender: Address;
+	permitVersion?: string;
 };
 
-export function usePermit({ address, chainId, walletClient }: UsePermitProps) {
-	const ready = walletClient && chainId && address;
+export function usePermit({
+	tokenAddress,
+	chainId,
+	walletClient,
+	owner,
+	spender,
+	permitVersion
+}: UsePermitProps) {
+	const { data: nonce } = useContractRead({
+		chainId,
+		address: tokenAddress,
+		abi: ERC20ABI,
+		functionName: "nonces",
+		args: [owner],
+	});
+	const { data: name } = useContractRead({
+		chainId,
+		address: tokenAddress,
+		abi: ERC20ABI,
+		functionName: "name",
+	});
+	const { data: versionFromContract } = useContractRead({
+		chainId,
+		address: tokenAddress,
+		abi: ERC20ABI,
+		functionName: "version",
+	});
+	const version = versionFromContract ??  permitVersion ?? "1"
+	const ready = walletClient && chainId && tokenAddress && name && nonce;
 
 	return {
 		signPermitDai: ready
 			? (
 					props: Omit<
 						SignPermitProps,
-						"chainId" | "ownerAddress" | "walletClient"
+						| "chainId"
+						| "ownerAddress"
+						| "walletClient"
+						| "contractAddress"
+						| "spenderAddress"
+						| "nonce"
+						| 'erc20Name'
+						| 'permitVersion'
 					>,
 			  ) =>
 					signPermitDai({
 						chainId,
 						walletClient,
-						ownerAddress: address,
+						ownerAddress: owner,
+						contractAddress: tokenAddress,
+						spenderAddress: spender,
+						erc20Name: name,
+						permitVersion: version,
+						nonce,
 						...props,
 					})
 			: undefined,
@@ -174,13 +218,25 @@ export function usePermit({ address, chainId, walletClient }: UsePermitProps) {
 			? (
 					props: Omit<
 						Eip2612Props,
-						"chainId" | "ownerAddress" | "walletClient"
+						| "chainId"
+						| "ownerAddress"
+						| "walletClient"
+						| "contractAddress"
+						| "spenderAddress"
+						| "nonce"
+						| 'erc20Name'
+						| 'permitVersion'
 					>,
 			  ) =>
 					signPermit2612({
 						chainId,
 						walletClient,
-						ownerAddress: address,
+						ownerAddress: owner,
+						contractAddress: tokenAddress,
+						spenderAddress: spender,
+						erc20Name: name,
+						nonce,
+						permitVersion: version,
 						...props,
 					})
 			: undefined,
