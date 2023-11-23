@@ -1,6 +1,14 @@
-import { Hex, hexToNumber, pad, slice, toHex, TypedDataDomain } from "viem";
+import {
+	Hex,
+	hexToNumber,
+	pad,
+	slice,
+	toHex,
+	TypedDataDomain,
+	zeroAddress,
+} from "viem";
 import type { Address, WalletClient } from "wagmi";
-import { useContractRead } from "wagmi";
+import { useContractRead, useWalletClient } from "wagmi";
 import { ERC20ABI } from "./abi.js";
 
 export type PermitSignature = {
@@ -152,7 +160,7 @@ type UsePermitProps = {
 	walletClient?: WalletClient | null;
 	chainId?: number;
 	tokenAddress?: Address;
-	owner: Address;
+	owner?: Address;
 	spender: Address;
 	permitVersion?: string;
 };
@@ -165,12 +173,15 @@ export function usePermit({
 	spender,
 	permitVersion,
 }: UsePermitProps) {
+	const { data: defaultWalletClient } = useWalletClient();
+	const walletClientToUse = walletClient ?? defaultWalletClient;
+	const ownerToUse = owner ?? walletClientToUse?.account.address ?? zeroAddress;
 	const { data: nonce } = useContractRead({
 		chainId,
 		address: tokenAddress,
 		abi: ERC20ABI,
 		functionName: "nonces",
-		args: [owner],
+		args: [ownerToUse],
 	});
 	const { data: name } = useContractRead({
 		chainId,
@@ -184,13 +195,19 @@ export function usePermit({
 		abi: ERC20ABI,
 		functionName: "version",
 	});
-	const version = versionFromContract ?? permitVersion ?? "1";
-	const ready = walletClient && chainId && tokenAddress && name && nonce;
+	const version = permitVersion ?? versionFromContract ?? "1";
+	const ready =
+		walletClientToUse !== null &&
+		walletClientToUse !== undefined &&
+		chainId !== undefined &&
+		tokenAddress !== undefined &&
+		name !== undefined &&
+		nonce !== undefined;
 
 	return {
 		signPermitDai: ready
 			? (
-					props: Omit<
+					props: PartialBy<
 						SignPermitProps,
 						| "chainId"
 						| "ownerAddress"
@@ -204,8 +221,8 @@ export function usePermit({
 			  ) =>
 					signPermitDai({
 						chainId,
-						walletClient,
-						ownerAddress: owner,
+						walletClient: walletClientToUse,
+						ownerAddress: owner ?? walletClientToUse.account.address,
 						contractAddress: tokenAddress,
 						spenderAddress: spender,
 						erc20Name: name,
@@ -216,7 +233,7 @@ export function usePermit({
 			: undefined,
 		signPermit: ready
 			? (
-					props: Omit<
+					props: PartialBy<
 						Eip2612Props,
 						| "chainId"
 						| "ownerAddress"
@@ -230,8 +247,8 @@ export function usePermit({
 			  ) =>
 					signPermit2612({
 						chainId,
-						walletClient,
-						ownerAddress: owner,
+						walletClient: walletClientToUse,
+						ownerAddress: owner ?? walletClientToUse.account.address,
 						contractAddress: tokenAddress,
 						spenderAddress: spender,
 						erc20Name: name,
@@ -242,3 +259,4 @@ export function usePermit({
 			: undefined,
 	};
 }
+type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;

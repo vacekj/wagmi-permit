@@ -2,22 +2,23 @@
 	"name": "wagmi-permit",
 	"version": "1.0.2",
 	"description": "Easy ERC-2612 and Dai permits with wagmi & viem",
-	"main": "./dist/permit.js",
-	"types": "./dist/permit.d.ts",
+	"main": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
 	"exports": {
 		"require": {
 			"types": "./dist/index.d.cts",
-			"default": "./dist/index.cjs"
+			"default": "./dist/index.js"
 		},
 		"import": {
-			"types": "./dist/index.d.mts",
+			"types": "./dist/index.d.ts",
 			"default": "./dist/index.mjs"
 		}
 	},
 	"type": "module",
 	"scripts": {
 		"test": "vitest run",
-		"build": "pkgroll"
+		"build": "tsup",
+		"dev": "tsup --watch"
 	},
 	"keywords": [
 		"wagmi",
@@ -30,10 +31,10 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.3.3",
 		"pkgroll": "^2.0.1",
+		"tsup": "^8.0.1",
 		"typescript": "^5.2.2",
-		"viem": "^1.19.0",
-		"viem-permit": "^1.0.2",
-		"wagmi": "^1.4.6"
+		"viem": "^1.19.8",
+		"wagmi": "^1.4.7"
 	},
 	"peerDependencies": {
 		"viem": "1.x",
