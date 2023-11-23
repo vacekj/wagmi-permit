@@ -2,6 +2,18 @@
 
 All you need to sign ERC-2612/DAI permits with viem and wagmi.
 
+# Usage
+
+TODO
+
+# Example
+
+TODO
+
+# Example app
+
+#
+
 ## Permit information for common tokens
 
 Information on various tokens, their supported permit type, version and methods.
@@ -38,4 +50,4 @@ Information on various tokens, their supported permit type, version and methods.
 
 ## Credits
 
-Big thank you to [Ana](https://twitter.com/AnaArsonist) for advice and wise words.    
+Big thank you to [Ana](https://twitter.com/AnaArsonist) for testing and advice

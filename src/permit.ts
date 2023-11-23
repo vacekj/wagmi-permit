@@ -163,7 +163,7 @@ export function usePermit({
 	walletClient,
 	owner,
 	spender,
-	permitVersion
+	permitVersion,
 }: UsePermitProps) {
 	const { data: nonce } = useContractRead({
 		chainId,
@@ -184,7 +184,7 @@ export function usePermit({
 		abi: ERC20ABI,
 		functionName: "version",
 	});
-	const version = versionFromContract ??  permitVersion ?? "1"
+	const version = versionFromContract ?? permitVersion ?? "1";
 	const ready = walletClient && chainId && tokenAddress && name && nonce;
 
 	return {
@@ -198,8 +198,8 @@ export function usePermit({
 						| "contractAddress"
 						| "spenderAddress"
 						| "nonce"
-						| 'erc20Name'
-						| 'permitVersion'
+						| "erc20Name"
+						| "permitVersion"
 					>,
 			  ) =>
 					signPermitDai({
@@ -224,8 +224,8 @@ export function usePermit({
 						| "contractAddress"
 						| "spenderAddress"
 						| "nonce"
-						| 'erc20Name'
-						| 'permitVersion'
+						| "erc20Name"
+						| "permitVersion"
 					>,
 			  ) =>
 					signPermit2612({
