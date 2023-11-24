@@ -4,6 +4,8 @@ All you need to sign ERC-2612/DAI permits with viem and wagmi.
 
 TODO
 - [ ] Save and return the permit signature value in the hook return value
+- [ ] Allow passing args via hook, but allow overriding in function params
+- [ ] TypeDoc -> GH Pages
 - [ ] Clean up Typescript types
 
 # Usage
