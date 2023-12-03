@@ -8,11 +8,12 @@ export type PermitSignature = {
 };
 
 export type SignPermitProps = {
+	/** Wallet client to invoke for signing the permit message */
 	walletClient: WalletClient;
 	/** Address of the token to approve */
 	contractAddress: Hex;
 	/** Name of the token to approve.
-	 * Corresponds to the `name` method on the ERC-20 contract. Please note this must match exactly, and is case-and-spacing sensitive */
+	 * Corresponds to the `name` method on the ERC-20 contract. Please note this must match exactly byte-for-byte */
 	erc20Name: string;
 	/** Owner of the tokens. Usually the currently connected address. */
 	ownerAddress: Hex;
@@ -22,7 +23,7 @@ export type SignPermitProps = {
 	deadline: bigint;
 	/** Numerical chainId of the token contract */
 	chainId: number;
-	/** Defaults to 1. Some tokens need a different version, check the [README](https://github.com/vacekj/permit#permit-information-for-common-tokens) for more information */
+	/** Defaults to 1. Some tokens need a different version, check the [PERMIT INFORMATION](https://github.com/vacekj/permit/tree/main/PERMIT.md) for more information */
 	permitVersion?: string;
 	/** Permit nonce for the specific user and token contract. You can get the nonce from the `nonces` method on the token contract. */
 	nonce: bigint;
@@ -58,6 +59,7 @@ export const signPermit2612 = async ({
 
 	const domainData = {
 		name: erc20Name,
+		/** We assume 1 if permit version is not specified */
 		version: permitVersion ?? "1",
 		chainId: chainId,
 		verifyingContract: contractAddress,
@@ -109,6 +111,7 @@ export const signPermitDai = async ({
 
 	let domainData: TypedDataDomain = {
 		name: erc20Name,
+		/** There are no known Dai deployments with Dai permit and version other than or unspecified */
 		version: permitVersion ?? "1",
 		chainId: chainId,
 		verifyingContract: contractAddress,
@@ -128,6 +131,7 @@ export const signPermitDai = async ({
 		spender: spenderAddress,
 		nonce,
 		expiry: deadline,
+		/** true == infinite allowance, false == 0 allowance*/
 		allowed: true,
 	};
 
