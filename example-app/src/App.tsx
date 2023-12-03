@@ -7,12 +7,13 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 function App() {
 	const { data: walletClient } = useWalletClient();
 	const { signPermit } = usePermit({
-		walletClient,
-		owner: walletClient?.account.address ?? zeroAddress,
+		walletClient: walletClient ?? undefined,
+		ownerAddress: walletClient?.account.address ?? zeroAddress,
 		chainId: walletClient?.chain.id,
-		spender: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
-		tokenAddress: "0xa2327a938febf5fec13bacfb16ae10ecbc4cbdcf", // usdc
+		spenderAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
+		contractAddress: "0xa2327a938febf5fec13bacfb16ae10ecbc4cbdcf", // usdc
 	});
+
 	return (
 		<Container my={3}>
 			<Heading as={"h1"} mb={5}>

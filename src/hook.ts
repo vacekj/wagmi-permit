@@ -80,7 +80,10 @@ export function usePermit({
 						nonce,
 						...props,
 					})
-						.then((signature) => setSignature(signature))
+						.then((signature) => {
+							setSignature(signature)
+							return signature;
+						})
 						.catch((error) => {
 							setError(error);
 							throw error;
@@ -111,14 +114,17 @@ export function usePermit({
 						permitVersion: version,
 						...props,
 					})
-						.then((signature) => setSignature(signature))
+						.then((signature) => {
+							setSignature(signature)
+							return signature;
+						})
 						.catch((error) => {
 							setError(error);
 							throw error;
 						})
 			: undefined,
 		signature,
-		error
+		error,
 	};
 }
 
