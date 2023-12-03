@@ -3,12 +3,15 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { ChakraProvider } from "@chakra-ui/react";
 import "@rainbow-me/rainbowkit/styles.css";
-import {getDefaultWallets, RainbowKitProvider} from "@rainbow-me/rainbowkit";
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import {mainnet, optimism} from "wagmi/chains";
+import { optimism } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
-const { chains, publicClient } = configureChains([mainnet, optimism], [publicProvider()]);
+const { chains, publicClient } = configureChains(
+	[optimism],
+	[publicProvider()],
+);
 
 const { connectors } = getDefaultWallets({
 	appName: "Wagmi Permit Demo",

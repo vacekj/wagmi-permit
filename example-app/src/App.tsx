@@ -11,7 +11,7 @@ function App() {
 		ownerAddress: walletClient?.account.address ?? zeroAddress,
 		chainId: walletClient?.chain.id,
 		spenderAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
-		contractAddress: "0xa2327a938febf5fec13bacfb16ae10ecbc4cbdcf", // usdc
+		contractAddress: "0x0b2c639c533813f4aa9d7837caf62653d097ff85", // usdc
 	});
 
 	return (
