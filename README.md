@@ -12,12 +12,12 @@ All you need to sign ERC-2612/DAI permits with viem and wagmi.
 ### Hook
 
 ```typescript jsx
-import {usePermit} from 'wagmi-permit';
+import { usePermit } from "wagmi-permit";
 
 function PermitExample() {
-  const {data: walletClient} = useWalletClient();
+  const { data: walletClient } = useWalletClient();
   /* No need to specify name, nonce and permit version, the hook takes care of all that automatically */
-  const {signPermit, signature} = usePermit({
+  const { signPermit, signature } = usePermit({
     walletClient,
     ownerAddress: walletClient?.account.address,
     chainId: 1,
@@ -49,7 +49,7 @@ function PermitExample() {
 You can override the data passed to the permit signature in the hook...
 
 ```typescript jsx
-const {signPermit, signature} = usePermit({
+const { signPermit, signature } = usePermit({
   walletClient,
   ownerAddress: walletClient?.account.address,
   chainId: 1,
@@ -60,7 +60,7 @@ const {signPermit, signature} = usePermit({
   /** Overrides */
   nonce: 2n,
   erc20Name: "Overriden Token Name",
-  version: "2"
+  version: "2",
 });
 ```
 
@@ -73,7 +73,7 @@ or in directly in the function
     const permitSignature = await signPermit?.({
       nonce: 2n,
       erc20Name: "Overriden Token Name",
-      version: "2"
+      version: "2",
     });
     console.log(permitSignature);
   }}
@@ -87,11 +87,11 @@ or in directly in the function
 Sign dai permits with the signPermitDai function returned from the hook
 
 ```typescript jsx
-import {usePermit} from 'wagmi-permit';
+import { usePermit } from "wagmi-permit";
 
 function DaiPermitExample() {
-  const {data: walletClient} = useWalletClient();
-  const {signPermitDai, signature} = usePermit({
+  const { data: walletClient } = useWalletClient();
+  const { signPermitDai, signature } = usePermit({
     walletClient,
     ownerAddress: walletClient?.account.address,
     chainId: 1,
@@ -118,13 +118,13 @@ function DaiPermitExample() {
 }
 ```
 
-### Action functions 
+### Action functions
 
 You can also use just the permit signing functions, for both dai and 2612 versions.
 
 ```typescript
-import {signPermit} from 'wagmi-permit';
-import {WalletClient} from "wagmi";
+import { signPermit } from "wagmi-permit";
+import { WalletClient } from "wagmi";
 
 async function signPermitForUSDC(walletClient: WalletClient) {
   const sig = await signPermit({
@@ -153,7 +153,6 @@ cd example-app
 npm i
 npm run dev
 ```
-
 
 ## Permit information for common tokens
 
