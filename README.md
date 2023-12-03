@@ -118,20 +118,42 @@ function DaiPermitExample() {
 }
 ```
 
-### Function 
+### Action functions 
 
-You can also use just the permit signing functions
+You can also use just the permit signing functions, for both dai and 2612 versions.
 
 ```typescript
 import {signPermit} from 'wagmi-permit';
+import {WalletClient} from "wagmi";
 
-function signPermitForUSDC() {
-  
+async function signPermitForUSDC(walletClient: WalletClient) {
+  const sig = await signPermit({
+    spenderAddress: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    ownerAddress: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    contractAddress: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    erc20Name: "USD Coin",
+    version: "2",
+    deadline: BigInt(Date.now() + 100_000),
+    nonce: 0n,
+    chainId: 1,
+    value: 1_000_000_000n,
+    walletClient,
+  });
+
+  console.log(sig);
 }
-
 ```
 
 # Example app
+
+Play with an example of signing a USDC permit on mainnet with the example app under `example-app`.
+
+```bash
+cd example-app
+npm i
+npm run dev
+```
+
 
 ## Permit information for common tokens
 
@@ -140,10 +162,3 @@ Information on various tokens, their supported permit type, version and methods 
 ## Credits
 
 Thank you to [Ana](https://twitter.com/AnaArsonist), [dcbuilder](https://twitter.com/dcbuild3r) for feedback
-
-## TODO
-
-- [x] Save and return the permit signature value in the hook return value
-- [ ] Allow passing args via hook, but allow overriding in function params
-- [ ] TypeDoc -> GH Pages
-- [ ] Clean up Typescript types

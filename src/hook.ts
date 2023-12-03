@@ -19,10 +19,12 @@ export function usePermit({
 	permitVersion,
 }: UsePermitProps) {
 	const [signature, setSignature] = useState<PermitSignature | undefined>();
+	const [error, setError] = useState();
 
 	const { data: defaultWalletClient } = useWalletClient();
 	const walletClientToUse = walletClient ?? defaultWalletClient;
-	const ownerToUse = ownerAddress ?? walletClientToUse?.account.address ?? zeroAddress;
+	const ownerToUse =
+		ownerAddress ?? walletClientToUse?.account.address ?? zeroAddress;
 	const { data: nonce } = useContractRead({
 		chainId,
 		address: contractAddress,
@@ -77,7 +79,12 @@ export function usePermit({
 						permitVersion: version,
 						nonce,
 						...props,
-					}).then((signature) => setSignature(signature))
+					})
+						.then((signature) => setSignature(signature))
+						.catch((error) => {
+							setError(error);
+							throw error;
+						})
 			: undefined,
 		signPermit: ready
 			? (
@@ -103,9 +110,15 @@ export function usePermit({
 						nonce,
 						permitVersion: version,
 						...props,
-					}).then((signature) => setSignature(signature))
+					})
+						.then((signature) => setSignature(signature))
+						.catch((error) => {
+							setError(error);
+							throw error;
+						})
 			: undefined,
 		signature,
+		error
 	};
 }
 
