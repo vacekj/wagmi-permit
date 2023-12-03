@@ -2,12 +2,41 @@
 
 All you need to sign ERC-2612/DAI permits with viem and wagmi.
 
+- [Wagmi-Permit](#wagmi-permit)
+    * [Features](#features)
+    * [Installation](#installation)
+    * [Usage](#usage)
+        + [Hook](#hook)
+        + [Hook with overrides](#hook-with-overrides)
+        + [Dai hook](#dai-hook)
+        + [Actions](#actions)
+- [Example app](#example-app)
+- [Permit information for common tokens](#permit-information-for-common-tokens)
+- [Credits](#credits)
+
+
+## Features
 - A set of functions and wagmi hooks to sign Permits
 - Supports both ERC-2612 Permit and Dai non-standard permit
 - Automatically manages nonce, version and token name - just pass in the contract address
 - Handles USDC on Polygon PoS edge-case
 
-# Usage
+## Installation
+
+```bash
+npm i wagmi-permit
+```
+```bash
+pnpm add wagmi-permit
+```
+```bash
+bun i wagmi-permit
+```
+```bash
+yarn add wagmi-permit
+```
+
+## Usage
 
 ### Hook
 
@@ -118,7 +147,7 @@ function DaiPermitExample() {
 }
 ```
 
-### Action functions
+### Actions
 
 You can also use just the permit signing functions, for both dai and 2612 versions.
 
@@ -154,10 +183,10 @@ npm i
 npm run dev
 ```
 
-## Permit information for common tokens
+# Permit information for common tokens
 
 Information on various tokens, their supported permit type, version and methods can be found in [PERMIT.md](PERMIT.md)
 
-## Credits
+# Credits
 
 Thank you to [Ana](https://twitter.com/AnaArsonist), [dcbuilder](https://twitter.com/dcbuild3r) for feedback
