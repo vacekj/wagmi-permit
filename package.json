@@ -30,14 +30,17 @@
 	"license": "GNU Affero v3",
 	"devDependencies": {
 		"@biomejs/biome": "1.3.3",
-		"pkgroll": "^2.0.1",
 		"tsup": "^8.0.1",
 		"typescript": "^5.2.2",
 		"viem": "^1.19.8",
-		"wagmi": "^1.4.7"
+		"wagmi": "^1.4.7",
+		"@types/react": "*"
 	},
 	"peerDependencies": {
 		"viem": "1.x",
 		"wagmi": "1.x"
+	},
+	"optionalDependencies": {
+		"react": "*"
 	}
 }
