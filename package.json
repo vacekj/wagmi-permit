@@ -1,6 +1,6 @@
 {
 	"name": "wagmi-permit",
-	"version": "1.0.8",
+	"version": "1.0.9",
 	"description": "Easy ERC-2612 and Dai permits with wagmi & viem",
 	"main": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
