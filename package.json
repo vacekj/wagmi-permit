@@ -39,9 +39,7 @@
 	},
 	"peerDependencies": {
 		"viem": "1.x",
-		"wagmi": "1.x"
-	},
-	"optionalDependencies": {
+		"wagmi": "1.x",
 		"react": "*"
 	}
 }
