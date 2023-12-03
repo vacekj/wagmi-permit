@@ -35,7 +35,7 @@ export type Eip2612Props = SignPermitProps & {
 };
 
 /** Signs a permit for ERC-2612-compatible ERC-20 tokens */
-export const signPermit2612 = async ({
+export const signPermit = async ({
 	walletClient,
 	contractAddress,
 	erc20Name,

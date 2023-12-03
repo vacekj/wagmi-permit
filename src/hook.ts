@@ -5,7 +5,7 @@ import { ERC20ABI } from "./abi.js";
 import {
 	Eip2612Props,
 	PermitSignature,
-	signPermit2612,
+	signPermit,
 	signPermitDai,
 	SignPermitProps,
 } from "./permit.js";
@@ -93,7 +93,7 @@ export function usePermit({
 						| "permitVersion"
 					>,
 			  ) =>
-					signPermit2612({
+					signPermit({
 						chainId,
 						walletClient: walletClientToUse,
 						ownerAddress: ownerAddress ?? walletClientToUse.account.address,

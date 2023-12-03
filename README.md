@@ -12,6 +12,8 @@ All you need to sign ERC-2612/DAI permits with viem and wagmi.
 ### Hook
 
 ```typescript jsx
+import {usePermit} from 'wagmi-permit';
+
 function PermitExample() {
   const {data: walletClient} = useWalletClient();
   /* No need to specify name, nonce and permit version, the hook takes care of all that automatically */
@@ -85,6 +87,8 @@ or in directly in the function
 Sign dai permits with the signPermitDai function returned from the hook
 
 ```typescript jsx
+import {usePermit} from 'wagmi-permit';
+
 function DaiPermitExample() {
   const {data: walletClient} = useWalletClient();
   const {signPermitDai, signature} = usePermit({
@@ -114,11 +118,18 @@ function DaiPermitExample() {
 }
 ```
 
-TODO
+### Function 
 
-- [ ] Hook - dai
-- [ ] Function - dai
-- [ ] Function - usdc
+You can also use just the permit signing functions
+
+```typescript
+import {signPermit} from 'wagmi-permit';
+
+function signPermitForUSDC() {
+  
+}
+
+```
 
 # Example app
 
