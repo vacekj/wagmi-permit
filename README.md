@@ -93,7 +93,7 @@ const { signPermit, signature } = usePermit({
 });
 ```
 
-or in directly in the function
+or directly in the function
 
 ```typescript jsx
 <button
@@ -113,7 +113,7 @@ or in directly in the function
 
 ### Dai hook
 
-Sign dai permits with the signPermitDai function returned from the hook
+Sign Dai permits with the signPermitDai function returned from the hook
 
 ```typescript jsx
 import { usePermit } from "wagmi-permit";
@@ -149,7 +149,7 @@ function DaiPermitExample() {
 
 ### Actions
 
-You can also use just the permit signing functions, for both dai and 2612 versions.
+You can also use just the permit signing functions, for both standard tokens and Dai
 
 ```typescript
 import { signPermit } from "wagmi-permit";
