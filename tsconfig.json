@@ -6,5 +6,5 @@
 		"skipLibCheck": true,
 		"lib": ["ESNext", "DOM"]
 	},
-	"exclude": ["example"]
+	"exclude": ["example-app"]
 }
