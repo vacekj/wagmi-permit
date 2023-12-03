@@ -23,9 +23,9 @@ export type SignPermitProps = {
 	deadline: bigint;
 	/** Numerical chainId of the token contract */
 	chainId: number;
-	/** Defaults to 1. Some tokens need a different version, check the [PERMIT INFORMATION](https://github.com/vacekj/permit/tree/main/PERMIT.md) for more information */
+	/** Defaults to 1. Some tokens need a different version, check the [PERMIT INFORMATION](https://github.com/vacekj/wagmi-permit/blob/main/PERMIT.md) for more information */
 	permitVersion?: string;
-	/** Permit nonce for the specific user and token contract. You can get the nonce from the `nonces` method on the token contract. */
+	/** Permit nonce for the specific address and token contract. You can get the nonce from the `nonces` method on the token contract. */
 	nonce: bigint;
 };
 
