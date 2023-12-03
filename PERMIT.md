@@ -8,7 +8,7 @@
 - It's currently used on Ethereum and Polygon PoS.
 - DAI supports ERC-2612 permit on other chains.
 - Some have version 1, some have version 2.
-- Contracts that don't have a version method (as it's not part of the [EIP2612](https://eips.ethereum.org/EIPS/ERC-2612)
+- Contracts that don't have a version method (as it's not part of the [ERC-2612](https://eips.ethereum.org/ERCS/ERC-2612)
   spec) are assumed to have version 1
 
 | Chain         | Address                                    | DAI Permit | EIP2612 Permit | Version | transferWithPermit |
