@@ -18,7 +18,7 @@
     "react-dom": "^18.2.0",
     "viem": "^1.19.8",
     "wagmi": "^1.4.7",
-    "wagmi-permit": "../"
+    "wagmi-permit": "latest"
   },
   "devDependencies": {
     "@types/node": "^20.9.4",
