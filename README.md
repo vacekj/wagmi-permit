@@ -175,9 +175,11 @@ async function signPermitForUSDC(walletClient: WalletClient) {
 
 # Example app
 
-Play with an example of signing a USDC permit on mainnet with the example app under `example-app`.
+Play with an example of signing a USDC permit on Optimism Mainnet in the example app under `example-app`.
 
 ```bash
+git clone https://github.com/vacekj/wagmi-permit
+cd wagmi-permit
 cd example-app
 npm i
 npm run dev
