@@ -19,7 +19,7 @@
 	},
 	"type": "module",
 	"scripts": {
-		"publish": "pnpm test && pnpm build && pnpm tsc && npm publish",
+		"prepublish": "pnpm test && pnpm build && pnpm tsc",
 		"test": "vitest run",
 		"build": "tsup",
 		"dev": "tsup --watch"
