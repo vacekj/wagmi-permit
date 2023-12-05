@@ -38,6 +38,8 @@ yarn add wagmi-permit
 
 ## Usage
 
+The auto-generated API docs [can be found here](https://vacekj.github.io/wagmi-permit)
+
 ### Hook
 
 ```typescript jsx
