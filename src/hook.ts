@@ -19,7 +19,7 @@ export function usePermit({
 	permitVersion,
 }: UsePermitProps) {
 	const [signature, setSignature] = useState<PermitSignature | undefined>();
-	const [error, setError] = useState();
+	const [error, setError] = useState<Error>();
 
 	const { data: defaultWalletClient } = useWalletClient();
 	const walletClientToUse = walletClient ?? defaultWalletClient;
@@ -56,7 +56,7 @@ export function usePermit({
 
 	return {
 		signPermitDai: ready
-			? (
+			? async (
 					props: PartialBy<
 						SignPermitProps,
 						| "chainId"
@@ -93,7 +93,7 @@ export function usePermit({
 						})
 			: undefined,
 		signPermit: ready
-			? (
+			? async (
 					props: PartialBy<
 						Eip2612Props,
 						| "chainId"
@@ -106,28 +106,31 @@ export function usePermit({
 					> & {
 						walletClient?: WalletClient;
 					},
-			  ) =>
-					signPermit(props.walletClient ?? walletClientToUse, {
-						chainId,
-						ownerAddress:
-							ownerAddress ??
-							props.walletClient?.account.address ??
-							walletClientToUse.account.address,
-						contractAddress: contractAddress,
-						spenderAddress: spenderAddress ?? zeroAddress,
-						erc20Name: name,
-						nonce,
-						permitVersion: version,
-						...props,
-					})
-						.then((signature) => {
-							setSignature(signature);
-							return signature;
-						})
-						.catch((error) => {
-							setError(error);
-							throw error;
-						})
+			  ) => {
+					try {
+						const signature = await signPermit(
+							props.walletClient ?? walletClientToUse,
+							{
+								chainId,
+								ownerAddress:
+									ownerAddress ??
+									props.walletClient?.account.address ??
+									walletClientToUse.account.address,
+								contractAddress: contractAddress,
+								spenderAddress: spenderAddress ?? zeroAddress,
+								erc20Name: name,
+								nonce,
+								permitVersion: version,
+								...props,
+							},
+						);
+						setSignature(signature);
+						return signature;
+					} catch (error) {
+						setError(error as Error);
+						throw error;
+					}
+			  }
 			: undefined,
 		signature,
 		error,
@@ -135,7 +138,7 @@ export function usePermit({
 }
 
 export type UsePermitProps = Partial<SignPermitProps> & {
-	walletClient: WalletClient;
+	walletClient?: WalletClient | null;
 };
 
 type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;

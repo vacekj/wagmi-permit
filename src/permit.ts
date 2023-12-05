@@ -39,6 +39,7 @@ export type Eip2612Props = SignPermitProps & {
  * @param {SignPermitProps} props - The properties required to sign the permit.
  * @param {string} props.contractAddress - The address of the ERC20 token contract.
  * @param {string} props.erc20Name - The name of the ERC20 token.
+ * @param {number} props.value - The amount of the ERC20 to approve.
  * @param {string} props.ownerAddress - The address of the token holder.
  * @param {string} props.spenderAddress - The address of the token spender.
  * @param {number} props.deadline - The permit expiration timestamp in seconds.
