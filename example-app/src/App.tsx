@@ -1,13 +1,13 @@
 import { Button, Container, Heading } from "@chakra-ui/react";
-import { useWalletClient } from "wagmi";
+import { serialize, useWalletClient } from "wagmi";
 import { usePermit } from "wagmi-permit";
 import { parseEther, zeroAddress } from "viem";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 function App() {
 	const { data: walletClient } = useWalletClient();
-	const { signPermit } = usePermit({
-		walletClient: walletClient ?? undefined,
+	const { signPermit, signature, error } = usePermit({
+		walletClient,
 		ownerAddress: walletClient?.account.address ?? zeroAddress,
 		chainId: walletClient?.chain.id,
 		spenderAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
@@ -24,13 +24,15 @@ function App() {
 				showBalance={{ smallScreen: true, largeScreen: true }}
 				accountStatus={{ smallScreen: "full", largeScreen: "full" }}
 			/>
+			{error && <pre>{serialize(error, null, 2)}</pre>}
+			{signature && <pre>{serialize(signature, null, 2)}</pre>}
 			{walletClient && (
 				<Button
 					mt={3}
 					onClick={async () => {
 						const permitSignature = await signPermit?.({
 							value: parseEther("10"),
-							deadline: BigInt(Date.now() + 100_000),
+							deadline: BigInt(Math.floor(Date.now() / 1000) + 100_000),
 						});
 
 						console.log(permitSignature);
