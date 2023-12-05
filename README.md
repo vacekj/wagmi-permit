@@ -152,11 +152,11 @@ function DaiPermitExample() {
 You can also use just the permit signing functions, for both standard tokens and Dai
 
 ```typescript
-import { signPermit } from "wagmi-permit";
-import { WalletClient } from "wagmi";
+import {signPermit} from "wagmi-permit";
+import {WalletClient} from "wagmi";
 
 async function signPermitForUSDC(walletClient: WalletClient) {
-  const sig = await signPermit({
+  const sig = await signPermit(walletClient, {
     spenderAddress: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
     ownerAddress: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
     contractAddress: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
@@ -166,7 +166,6 @@ async function signPermitForUSDC(walletClient: WalletClient) {
     nonce: 0n,
     chainId: 1,
     value: 1_000_000_000n,
-    walletClient,
   });
 
   console.log(sig);
