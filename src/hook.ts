@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useContractRead, useWalletClient } from "wagmi";
+import { useContractRead, useWalletClient, WalletClient } from "wagmi";
 import { zeroAddress } from "viem";
 import { ERC20ABI } from "./abi.js";
 import {
@@ -61,18 +61,21 @@ export function usePermit({
 						SignPermitProps,
 						| "chainId"
 						| "ownerAddress"
-						| "walletClient"
 						| "contractAddress"
 						| "spenderAddress"
 						| "nonce"
 						| "erc20Name"
 						| "permitVersion"
-					>,
+					> & {
+						walletClient?: WalletClient;
+					},
 			  ) =>
-					signPermitDai({
+					signPermitDai(props.walletClient ?? walletClientToUse, {
 						chainId,
-						walletClient: walletClientToUse,
-						ownerAddress: ownerAddress ?? walletClientToUse.account.address,
+						ownerAddress:
+							ownerAddress ??
+							props.walletClient?.account.address ??
+							walletClientToUse.account.address,
 						contractAddress: contractAddress,
 						spenderAddress: spenderAddress ?? zeroAddress,
 						erc20Name: name,
@@ -81,7 +84,7 @@ export function usePermit({
 						...props,
 					})
 						.then((signature) => {
-							setSignature(signature)
+							setSignature(signature);
 							return signature;
 						})
 						.catch((error) => {
@@ -95,18 +98,21 @@ export function usePermit({
 						Eip2612Props,
 						| "chainId"
 						| "ownerAddress"
-						| "walletClient"
 						| "contractAddress"
 						| "spenderAddress"
 						| "nonce"
 						| "erc20Name"
 						| "permitVersion"
-					>,
+					> & {
+						walletClient?: WalletClient;
+					},
 			  ) =>
-					signPermit({
+					signPermit(props.walletClient ?? walletClientToUse, {
 						chainId,
-						walletClient: walletClientToUse,
-						ownerAddress: ownerAddress ?? walletClientToUse.account.address,
+						ownerAddress:
+							ownerAddress ??
+							props.walletClient?.account.address ??
+							walletClientToUse.account.address,
 						contractAddress: contractAddress,
 						spenderAddress: spenderAddress ?? zeroAddress,
 						erc20Name: name,
@@ -115,7 +121,7 @@ export function usePermit({
 						...props,
 					})
 						.then((signature) => {
-							setSignature(signature)
+							setSignature(signature);
 							return signature;
 						})
 						.catch((error) => {
@@ -128,6 +134,8 @@ export function usePermit({
 	};
 }
 
-export type UsePermitProps = Partial<SignPermitProps>;
+export type UsePermitProps = Partial<SignPermitProps> & {
+	walletClient: WalletClient;
+};
 
 type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;

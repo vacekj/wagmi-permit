@@ -26,7 +26,7 @@ describe("signPermit", () => {
 				"0x37f4910aeebdf5f1f4afe3587424b1916ab39cb7d788e62bb5652467bdda025b692d56085b542f253389d57b86c78d3eefc7a282ecbcdb97ccfe569c9ef8e6c89bd9" as Hex,
 		);
 
-		await signPermit({
+		await signPermit(walletClient, {
 			ownerAddress,
 			spenderAddress,
 			value,
@@ -35,7 +35,6 @@ describe("signPermit", () => {
 			chainId,
 			contractAddress,
 			erc20Name,
-			walletClient,
 		});
 
 		expect(signTypedData).toHaveBeenCalledOnce();
