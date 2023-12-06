@@ -1,5 +1,8 @@
 # Wagmi Permit
 
+![npm](https://img.shields.io/npm/v/wagmi-permit)
+![npm](https://img.shields.io/npm/dm/wagmi-permit)
+
 All you need to sign ERC-2612/DAI permits with viem and wagmi.
 
 - [Wagmi-Permit](#wagmi-permit)
