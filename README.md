@@ -195,4 +195,4 @@ Information on various tokens, their supported permit type, version and methods 
 
 # Credits
 
-Thank you to [Ana](https://twitter.com/AnaArsonist) and [sofia](https://twitter.com/al3thi0meter) for feedback.
+Thank you to [Ana](https://twitter.com/AnaArsonist), [dcbuilder](https://twitter.com/dcbuild3r) and [sofia](https://twitter.com/al3thi0meter) for feedback.
