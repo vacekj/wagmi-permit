@@ -58,7 +58,7 @@ function PermitExample() {
     spenderAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
     contractAddress: "0xa2327a938febf5fec13bacfb16ae10ecbc4cbdcf", // usdc on mainnet
     value: parseEther("10"),
-    deadline: BigInt(Date.now() + 100_000),
+    deadline: BigInt(Math.floor(Date.now() / 1000) + 100_000),
   });
 
   return (
@@ -90,7 +90,7 @@ const { signPermit, signature } = usePermit({
   spenderAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
   contractAddress: "0xa2327a938febf5fec13bacfb16ae10ecbc4cbdcf", // usdc on mainnet
   value: parseEther("10"),
-  deadline: BigInt(Date.now() + 100_000),
+  deadline: BigInt(Math.floor(Date.now() / 1000) + 100_000),
   /** Overrides */
   nonce: 2n,
   erc20Name: "Overriden Token Name",
@@ -132,7 +132,7 @@ function DaiPermitExample() {
     spenderAddress: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // vitalik.eth
     contractAddress: "0x6b175474e89094c44da98b954eedeac495271d0f", // dai on mainnet
     value: parseEther("10"),
-    deadline: BigInt(Date.now() + 100_000),
+    deadline: BigInt(Math.floor(Date.now() / 1000) + 100_000),
   });
 
   return (
@@ -167,7 +167,7 @@ async function signPermitForUSDC(walletClient: WalletClient) {
     contractAddress: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     erc20Name: "USD Coin",
     version: "2",
-    deadline: BigInt(Date.now() + 100_000),
+    deadline: BigInt(Math.floor(Date.now() / 1000) + 100_000),
     nonce: 0n,
     chainId: 1,
     value: 1_000_000_000n,
