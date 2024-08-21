@@ -44,7 +44,15 @@ export function usePermit({
 		abi: ERC20ABI,
 		functionName: "version",
 	});
-	const version = permitVersion ?? versionFromContract ?? "1";
+  
+  	const validatedVersionFromContract = [1, 2, '1', '2'].includes(
+    versionFromContract
+  )
+    ? versionFromContract
+    : null;
+
+	const version = permitVersion ?? validatedVersionFromContract ?? '1';
+	
 	const ready =
 		walletClientToUse !== null &&
 		walletClientToUse !== undefined &&
