@@ -45,9 +45,9 @@ export function usePermit({
 		functionName: "version",
 	});
   
-  	const validatedVersionFromContract = [1, 2, '1', '2'].includes(versionFromContract)
-	    ? versionFromContract
-	    : null;
+  const validatedVersionFromContract = [1, 2, '1', '2'].includes(versionFromContract ?? "")
+		? versionFromContract
+		: null;
 
 	const version = permitVersion ?? validatedVersionFromContract ?? '1';
 	
